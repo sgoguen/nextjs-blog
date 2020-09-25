@@ -7,6 +7,7 @@ type Props = {
 }
 
 const Alert = ({ preview }: Props) => {
+  if (!preview) { return null; }
   return (
     <div
       className={cn('border-b', {
@@ -28,17 +29,17 @@ const Alert = ({ preview }: Props) => {
               to exit preview mode.
             </>
           ) : (
-            <>
-              The source code for this blog is{' '}
-              <a
-                href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-                className="underline hover:text-success duration-200 transition-colors"
-              >
-                available on GitHub
+              <>
+                The source code for this blog is{' '}
+                <a
+                  href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
+                  className="underline hover:text-success duration-200 transition-colors"
+                >
+                  available on GitHub
               </a>
               .
             </>
-          )}
+            )}
         </div>
       </Container>
     </div>

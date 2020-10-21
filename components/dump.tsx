@@ -1,59 +1,86 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import * as z from 'zod';
+
+const customType = z.object({
+    '@type': z.string()
+});
 
 type RenderType = "simple-value" | "object" | "array";
+type RenderFunction = (value: unknown) => JSX.Element | null;
 
-export function Dump(props: { value: unknown }) {
+const customerRenderers = new Map<string, RenderFunction>();
+
+export function setRenderFunction(typeName: string, render: RenderFunction) {
+    customerRenderers.set(typeName, render);
+}
+
+export function Dump(props: { value: unknown }): JSX.Element {
     const o = props.value;
     const info = getRenderType(o);
-    switch (info.type) {
-        case 'simple-value':
-            return <div>{info.value}</div>;
-        case 'object':
-            const keyValues = getKeyValues(info.value);
-            return <Table striped bordered hover>
-                {keyValues.map(kv => {
-                    const { key, value } = kv;
-                    return <tr>
-                        <th>{key}</th>
-                        <td>
-                            <Dump value={value}></Dump>
-                        </td>
-                    </tr>
-                })}
-            </Table>
-        case 'array':
-            const rows = info.value as Record<string, unknown>[];
-            if (info.keys) {
-                const keys = info.keys as string[];
-                return <table>
-                    <thead>
-                        <tr>
-                            {info.keys.map(key => <th>{key}</th>)}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {rows.map(row => <tr>
-                            {keys.map(key => <td>
-                                <Dump value={row[key]}></Dump>
-                            </td>)}
-                        </tr>)}
-                    </tbody>
-                </table>
+    if (info.type === 'simple-value') {
+        return <div>{info.value}</div>;
+    } else if (info.type === 'object') {
+        const { value } = info;
+        const obj = customType.safeParse(value);
+        if (obj.success && obj.data["@type"]) {
+            const type = obj.data["@type"];
+            const renderer = customerRenderers.get(type);
+            if (renderer) {
+                const result = renderer(value)
+                if (result) {
+                    return result;
+                }
             }
+        }
+        const keyValues = getKeyValues(value);
+        return <Table striped bordered hover>
+            {keyValues.map(kv => {
+                const { key, value } = kv;
+                return <tr>
+                    <th>{key}</th>
+                    <td>
+                        <Dump value={value}></Dump>
+                    </td>
+                </tr>
+            })}
+        </Table>
+    } else {
+        const { value, keys } = info;
+        const rows = value as Record<string, unknown>[];
+        if (keys) {
             return <table>
+                <thead>
+                    <tr>
+                        {keys.map(key => <th>{key}</th>)}
+                    </tr>
+                </thead>
                 <tbody>
                     {rows.map(row => <tr>
-                        <Dump value={row}></Dump>
+                        {keys.map(key => <td>
+                            <Dump value={row[key]}></Dump>
+                        </td>)}
                     </tr>)}
                 </tbody>
             </table>
+        }
+        return <table>
+            <tbody>
+                {rows.map(row => <tr>
+                    <Dump value={row}></Dump>
+                </tr>)}
+            </tbody>
+        </table>
     }
 }
 
+type RenderInfo = { type: 'simple-value'; value: string } |
+{ type: 'object'; value: object } |
+{ type: 'array'; value: object; keys: string[] | undefined };
+
 function getRenderType(
     value: any
-): { type: RenderType; value: any; keys?: string[] } {
+): RenderInfo {
     const type = typeof value;
     switch (type) {
         case "string":
@@ -69,7 +96,7 @@ function getRenderType(
                 const keys = getCommonKeys(value);
                 return { type: "array", value, keys };
             }
-            return { type: "object", value: value };
+            return { type: "object", value: (value as object) };
         default:
             throw new Error("Unsupported type");
     }

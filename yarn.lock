@@ -6191,3 +6191,8 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+zod@^1.11.9:
+  version "1.11.9"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-1.11.9.tgz#c6c503804d394f8ef009d44ce464bbf8aa3c1bd6"
+  integrity sha512-qZjs9DkvPYHOiOUdAtNcxOC0u5cv7tx9DCmlNZN0MxWeFvgqyr3XkXFqUlaSpmTiZ4A4YVkB2s1Zw2ENJ9/fSg==

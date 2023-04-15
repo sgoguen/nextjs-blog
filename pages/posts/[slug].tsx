@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import ReactMarkdown from 'react-markdown'
 
 type Props = {
   post: PostType
@@ -38,13 +39,17 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
-              <PostHeader
+              {/* <PostHeader
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
-              />
-              <PostBody content={post.content} />
+              /> */}
+              {/* <PostBody content={post.content} /> */}
+              {/* <div className="max-w-2xl mx-auto"> */}
+
+                <ReactMarkdown>{post.content}</ReactMarkdown>
+              {/* </div> */}
             </article>
           </>
         )}

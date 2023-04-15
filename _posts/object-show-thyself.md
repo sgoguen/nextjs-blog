@@ -1,19 +1,33 @@
 ---
 title: 'Object - Show thyself!'
 excerpt: 'In 2007, I became obsessed with LINQPad and the object dumper.'
-coverImage: '/assets/blog/dynamic-routing/cover.jpg'
+coverImage: '/assets/white-and-grey-fractal.png'
 date: '2020-09-24T20:51:00.000Z'
 author:
   name: Steve Goguen
   picture: '/assets/blog/authors/jj.jpeg'
 ogImage:
-  url: '/assets/blog/dynamic-routing/cover.jpg'
+  url: '/assets/white-and-grey-fractal.png'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+## Object - Show thyself!
 
-Venenatis cras sed felis eget velit. Consectetur libero id faucibus nisl tincidunt. Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae. Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volutpat sed cras. Sed odio morbi quis commodo odio aenean sed adipiscing. Velit euismod in pellentesque massa placerat. Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed viverra tellus in. Nibh cras pulvinar mattis nunc sed. Luctus accumsan tortor posuere ac ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
+In 2007, I became obsessed with LINQPad.  If you've never used it, LINQPad is a tool that allows you to write C# code and execute it.  It's a great tool for learning C# and for quickly prototyping code.  It's also a great tool for quickly prototyping LINQ queries.  I used it to quickly prototype LINQ queries for a project I was working on at the time.  I was so impressed with the object dumper that I wrote a blog post about it.  I've been using the object dumper ever since.
 
-## Lorem Ipsum
+## Creating an Object Dumper with React and TypeScript
 
-Tristique senectus et netus et malesuada fames ac turpis. Ridiculous mus mauris vitae ultricies leo integer malesuada nunc vel. In mollis nunc sed id semper. Egestas tellus rutrum tellus pellentesque. Phasellus vestibulum lorem sed risus ultricies tristique nulla. Quis blandit turpis cursus in hac habitasse platea dictumst quisque. Eros donec ac odio tempor orci dapibus ultrices. Aliquam sem et tortor consequat id porta nibh. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Diam vulputate ut pharetra sit amet. Ut tellus elementum sagittis vitae et leo. Arcu non odio euismod lacinia at quis risus sed vulputate.
+I've been working on a project that uses React and TypeScript.  I wanted to create a component that would allow me to quickly dump an object to the screen.  I started by creating a new React project using `create-react-app`.  I then added TypeScript support to the project.  I used the following command to add TypeScript support:
+
+```bash
+npx create-react-app my-app --template typescript
+```
+
+I then created a new component called `ObjectDumper`.  I added the following code to the component:
+
+```tsx
+import React from 'react';
+
+export interface ObjectDumperProps {
+    object: any;
+}
+```

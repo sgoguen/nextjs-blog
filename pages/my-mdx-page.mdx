@@ -1,0 +1,17 @@
+import { Dump } from "../components/Dump";
+
+export const meta = {
+  author: "Steve Goguen",
+};
+
+<h1 class="text-4xl font-bold">My MDX page</h1>
+
+Here's how we can use the Dump component to display the meta data:
+
+<Dump
+  value={[
+    { id: 1, text: "Learn Next.js", completed: true },
+    { id: 2, text: "Learn React", completed: false },
+    { id: 3, text: "Learn GraphQL", completed: false },
+  ]}
+/>

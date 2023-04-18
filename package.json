@@ -7,6 +7,9 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@mdx-js/loader": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
+    "@next/mdx": "^13.3.0",
     "bootstrap": "^4.5.2",
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",

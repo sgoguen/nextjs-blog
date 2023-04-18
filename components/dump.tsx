@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+// import { Table } from "react-bootstrap";
 import * as z from 'zod';
 
 const customType = z.object({
@@ -34,29 +34,30 @@ export function Dump(props: { value: unknown }): JSX.Element {
             }
         }
         const keyValues = getKeyValues(value);
-        return <Table striped bordered hover>
+        return <table className="table-auto border-collapse border">
             {keyValues.map(kv => {
                 const { key, value } = kv;
                 return <tr>
-                    <th>{key}</th>
-                    <td>
+                    <th className="border border-slate-600">{key}</th>
+                    <td className="border border-slate-600">
                         <Dump value={value}></Dump>
                     </td>
                 </tr>
             })}
-        </Table>
+        </table>
     } else {
         const { value, keys } = info;
         const rows = value as Record<string, unknown>[];
         if (keys) {
-            return <table>
+            // Tailwind CSS table
+            return <table className="table-auto border-collapse border">
                 <thead>
-                    <tr>
-                        {keys.map(key => <th>{key}</th>)}
+                    <tr >
+                        {keys.map(key => <th className="border border-slate-600">{key}</th>)}
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map(row => <tr>
+                    {rows.map(row => <tr className="border border-slate-600">
                         {keys.map(key => <td>
                             <Dump value={row[key]}></Dump>
                         </td>)}
@@ -64,7 +65,7 @@ export function Dump(props: { value: unknown }): JSX.Element {
                 </tbody>
             </table>
         }
-        return <table>
+        return <table className="table-auto border-collapse border">
             <tbody>
                 {rows.map(row => <tr>
                     <Dump value={row}></Dump>

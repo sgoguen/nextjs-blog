@@ -10,8 +10,7 @@ import PostTitle from '../../components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
-import PostType from '../../types/post'
-import ReactMarkdown from 'react-markdown'
+import type PostType from '../../interfaces/post'
 
 type Props = {
   post: PostType
@@ -19,8 +18,9 @@ type Props = {
   preview?: boolean
 }
 
-const Post = ({ post, morePosts, preview }: Props) => {
+export default function Post({ post, morePosts, preview }: Props) {
   const router = useRouter()
+  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -34,22 +34,16 @@ const Post = ({ post, morePosts, preview }: Props) => {
           <>
             <article className="mb-32">
               <Head>
-                <title>
-                  {post.title} | Next.js Blog Example with {CMS_NAME}
-                </title>
+                <title>{title}</title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
-              {/* <PostHeader
+              <PostHeader
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
-              /> */}
-              {/* <PostBody content={post.content} /> */}
-              {/* <div className="max-w-2xl mx-auto"> */}
-
-                <ReactMarkdown>{post.content}</ReactMarkdown>
-              {/* </div> */}
+              />
+              <PostBody content={post.content} />
             </article>
           </>
         )}
@@ -57,8 +51,6 @@ const Post = ({ post, morePosts, preview }: Props) => {
     </Layout>
   )
 }
-
-export default Post
 
 type Params = {
   params: {
@@ -92,10 +84,10 @@ export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
 
   return {
-    paths: posts.map((posts) => {
+    paths: posts.map((post) => {
       return {
         params: {
-          slug: posts.slug,
+          slug: post.slug,
         },
       }
     }),
